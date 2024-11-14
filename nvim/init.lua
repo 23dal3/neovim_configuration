@@ -35,7 +35,7 @@ vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 
 -- Plugin manager initialization
 require("config.lazy")
-require("themes.nebulous")
+require("themes.nightfox")
 
 
 -- Set leader keys
@@ -51,5 +51,18 @@ vim.api.nvim_set_keymap('n', '<Leader>w', ':w<CR>', { noremap = true, silent = t
 -- Mapping to close the buffer using <Leader>q
 vim.api.nvim_set_keymap('n', '<Leader>q', ':q<CR>', { noremap = true, silent = true })
 
+-- Mapping to close the buffer with save using <Leader>x
+vim.api.nvim_set_keymap('n', '<Leader>x', ':x<CR>', { noremap = true, silent = true })
 
+-- Map <Leader>v to :vsplit
+vim.api.nvim_set_keymap('n', '<Leader>v', ':vsplit<CR>', { noremap = true, silent = true })
+
+-- Map <Leader>h to :split (horizontal split)
+vim.api.nvim_set_keymap('n', '<Leader>h', ':split<CR>', { noremap = true, silent = true })
+
+-- Map Ctrl-S to :wq
+vim.api.nvim_set_keymap('n', '<C-s>', ':wq<CR>', { noremap = true, silent = true })
+
+-- Map <Leader>e to :Explore
+vim.api.nvim_set_keymap('n', '<Leader>e', ':Explore<CR>', { noremap = true, silent = true })
 

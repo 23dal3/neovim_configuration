@@ -20,6 +20,7 @@ return {
 
     -- formatting
     'none-ls-external-sources.formatting.autopep8',
+    'none-ls-external-sources.formatting.clang_format',
     'none-ls-external-sources.formatting.beautysh',
     'none-ls-external-sources.formatting.easy-coding-standard',
     'none-ls-external-sources.formatting.eslint',

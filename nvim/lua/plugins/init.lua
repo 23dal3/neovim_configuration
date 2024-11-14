@@ -9,5 +9,6 @@ return {
   require("plugins.mason"),
   require("plugins.hover"),
   require("plugins.telescope"),
+  require("plugins.latex"),
 }
 

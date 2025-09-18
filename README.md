@@ -1,157 +1,148 @@
+# 🛠 Neovim Configuration
 
-# My Neovim Configuration
+This is my personal Neovim configuration, built for **speed**, **modern plugin management** with [Lazy.nvim](https://github.com/folke/lazy.nvim), and strong support for **LSP**, **completion**, and **LaTeX editing**.
 
-Welcome to my Neovim setup! This configuration uses the Lazy plugin manager and is tailored for a modern, productive, and efficient development environment. It supports various programming languages and includes LSP, Treesitter, and formatting tools.
+Supports **macOS** and **Linux** (no Windows support).
 
-## Prerequisites
+---
 
-Before starting, make sure you have the following installed:
+## 📦 Prerequisites
 
-1. **Neovim (v0.9.0 or newer)**:
-   ```bash
-   nvim --version
-   ```
+### Common (macOS & Linux)
 
-2. **Git** (for plugin management):
-   ```bash
-   sudo apt install git
-   ```
+- **Neovim** ≥ 0.9 (v0.10+ recommended)
+- **Git** – required for plugin installation
+- **Node.js** – for LSP servers & Tree-sitter
+- **Python 3** with `pynvim`
+- **ripgrep** & **fd** – used by Telescope
+- **C compiler** – for building Treesitter parsers
 
-3. **Node.js and npm** (optional, for LSP support in JavaScript/TypeScript):
-   ```bash
-   sudo apt install nodejs npm
-   ```
+---
 
-4. **Python** (optional, for Python LSP support):
-   ```bash
-   sudo apt install python3 python3-pip
-   ```
+## 🐧 Installation (Linux)
 
-5. **Ripgrep** (optional, recommended for Telescope fuzzy finder):
-   ```bash
-   sudo apt install ripgrep
-   ```
-
-## Installation
-
-1. **Clone this repository to your Neovim configuration directory**:
-   ```bash
-   git clone https://github.com/23dal3/neovim-config ~/.config/nvim
-   ```
-
-2. **Install the Lazy plugin manager**:
-   ```bash
-   curl -sSLo ~/.local/share/nvim/lazy/lazy.nvim --create-dirs \
-   https://github.com/folke/lazy.nvim/releases/latest/download/lazy.nvim
-   ```
-
-3. **Install plugins using Lazy**:
-   Open Neovim and run:
-   ```vim
-   :Lazy install
-   ```
-
-4. **Install LSP servers**:
-   Open Neovim and run the Mason installer:
-   ```vim
-   :Mason
-   ```
-   Then install the required LSP servers (e.g., `pyright`, `tsserver`, `clangd`).
-
-## Configuration Structure
-
-The configuration is organized into several Lua files for modularity and easier maintenance:
-
-- `~/.config/nvim/init.lua`: Main entry point, loads all configurations.
-- `~/.config/nvim/lua/plugins/init.lua`: Lazy plugin setup.
-- `~/.config/nvim/lua/plugins/lsp.lua`: LSP settings and configurations.
-- `~/.config/nvim/lua/plugins/theme.lua`: Custom theme settings (e.g., Catppuccin, Nebulous).
-- `~/.config/nvim/lua/plugins/telescope.lua`: Configuration for Telescope fuzzy finder.
-- `~/.config/nvim/lua/plugins/none-ls.lua`: Configuration for diagnostics and formatting tools.
-- `~/.config/nvim/lua/ui.lua`: UI enhancements and configurations.
-
-## Key Features
-
-- **Lazy Plugin Management**: Fast and efficient plugin loading with Lazy.
-- **LSP Support**: Language Server Protocol (LSP) integration for code completion, diagnostics, and more.
-- **Treesitter**: Advanced syntax highlighting and code parsing.
-- **Telescope**: Powerful fuzzy finder for files, buffers, and more.
-- **Auto-formatting**: Configured with `none-ls.nvim` for formatting and diagnostics (supports Flake8, cpplint, eslint, etc.).
-- **Custom Theme**: Aesthetic and readable theme customization (Catppuccin with custom highlight groups).
-- **Integrated Terminal Support**: Seamless integration with tmux.
-
-## Usage
-
-### Common Commands
-
-#### Plugin Management
-
-- Install plugins: `:Lazy install`
-- Update plugins: `:Lazy update`
-- Check plugin health: `:checkhealth`
-
-#### LSP Commands
-
-- Open LSP info: `:LspInfo`
-- Format file: `:lua vim.lsp.buf.format()`
-- Show diagnostics: `:lua vim.diagnostic.open_float()`
-
-#### Telescope Commands
-
-- Find files: `:Telescope find_files`
-- Live grep: `:Telescope live_grep`
-- Buffer search: `:Telescope buffers`
-
-#### Git Integration
-
-- View git status: `:Gitsigns status`
-- Stage hunk: `:Gitsigns stage_hunk`
-- Undo stage hunk: `:Gitsigns undo_stage_hunk`
-
-## Keyboard Shortcuts
-
-| Action                        | Shortcut       |
-|-------------------------------|----------------|
-| Save file                     | `Ctrl-S`       |
-| Open file tree                | `<leader>e`    |
-| Find files (Telescope)        | `<leader>ff`   |
-| Live grep (Telescope)         | `<leader>fg`   |
-| LSP code action               | `<leader>ca`   |
-| Format file                   | `<leader>f`    |
-| Toggle terminal (tmux)        | `<leader>t`    |
-
-## Customization
-
-- **Theme**: Customize the appearance in `~/.config/nvim/lua/plugins/theme.lua`. You can change the color scheme or modify highlight groups.
-- **UI Settings**: Modify `~/.config/nvim/lua/ui.lua` for tweaks like icons, status line, and more.
-- **LSP Servers**: Add or remove LSP servers in `~/.config/nvim/lua/plugins/lsp.lua`.
-
-## Troubleshooting
-
-1. **Plugin not loading**:
-   - Run `:Lazy check` to see if there are any issues.
-   - Try running `:Lazy clean` and then `:Lazy install` again.
-
-2. **LSP server not starting**:
-   - Make sure the LSP server is installed via Mason (`:Mason`).
-   - Check if the correct file type is supported by the LSP server.
-
-3. **Performance issues**:
-   - Disable unused plugins in `~/.config/nvim/lua/plugins/init.lua`.
-   - Reduce Treesitter modules for specific languages if necessary.
-
-## Updating the Configuration
-
-To update the configuration, simply pull the latest changes from GitHub:
 ```bash
-cd ~/.config/nvim
-git pull origin main
+# 1. Install prerequisites
+sudo apt update
+sudo apt install -y neovim git ripgrep fd-find build-essential python3-pip
+sudo ln -s $(which fdfind) /usr/local/bin/fd
+
+# 2. Install pynvim
+python3 -m pip install --user --upgrade pynvim
+
+# 3. (Optional) Install Node.js via Volta
+curl https://get.volta.sh | bash
+volta install node
+
+# 4. Backup existing config
+mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
+
+# 5. Install this config
+git clone <your-repo-url> ~/.config/nvim
+
+# 6. Launch Neovim
+nvim
 ```
 
-## Contributing
+Lazy.nvim will bootstrap and install all plugins automatically on first launch.  
+Restart Neovim once installation completes.
 
-Feel free to fork this repository and make your own changes. Pull requests are welcome!
+---
 
-## License
+## 🍏 Installation (macOS)
 
-This Neovim configuration is open-source and available under the MIT License.
+```bash
+# 1. Install prerequisites
+brew install neovim git ripgrep fd python
+
+# 2. Install pynvim
+python3 -m pip install --user --upgrade pynvim
+
+# 3. Install Node.js via Volta (recommended)
+curl https://get.volta.sh | bash
+volta install node
+
+# 4. Backup existing config
+mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
+
+# 5. Install this config
+git clone <your-repo-url> ~/.config/nvim
+
+# 6. Launch Neovim
+nvim
+```
+
+---
+
+## 🎨 Plugins
+
+This setup includes:
+
+- **Plugin Manager:** Lazy.nvim
+- **Fuzzy Finder:** telescope.nvim
+- **Syntax & Parsing:** nvim-treesitter
+- **LSP & Autocompletion:** nvim-lspconfig, mason.nvim, nvim-cmp, LuaSnip
+- **UI Enhancements:** vim-airline, themes, undotree, hover.nvim
+- **Git:** vim-fugitive
+- **Utilities:** vim-easy-align, vim-wakatime, none-ls.nvim
+- **LaTeX:** vimtex
+
+---
+
+## 🧩 LSP Setup
+
+Open Mason UI:
+
+```vim
+:Mason
+```
+
+Install servers as needed:
+- lua-language-server (Lua)
+- pyright (Python)
+- tsserver (JavaScript/TypeScript)
+- clangd (C/C++)
+- texlab (LaTeX)
+
+---
+
+## 🎨 Recommended Extras
+
+- **Nerd Font** → [Download here](https://www.nerdfonts.com/) and set as terminal font  
+- **fzf** and **bat** for better fuzzy finding and previews:
+  ```bash
+  brew install fzf bat   # macOS
+  sudo apt install fzf bat -y  # Linux
+  ```
+
+---
+
+## ✅ Health Check
+
+Run inside Neovim to verify:
+```vim
+:checkhealth
+```
+
+---
+
+## 🐛 Troubleshooting
+
+- Sync plugins manually:
+  ```vim
+  :Lazy sync
+  ```
+- Reinstall broken LSP servers:
+  ```vim
+  :Mason
+  ```
+- Fix Python issues:
+  ```bash
+  python3 -m pip install --user --upgrade pynvim
+  ```
+
+---
+
+## 📜 License
+
+MIT – use and adapt freely.

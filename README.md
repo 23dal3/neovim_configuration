@@ -38,7 +38,7 @@ volta install node
 mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
 
 # 5. Install this config
-git clone <your-repo-url> ~/.config/nvim
+git clone git@github.com:23dal3/neovim_configuration.git ~/.config/nvim
 
 # 6. Launch Neovim
 nvim
@@ -66,7 +66,7 @@ volta install node
 mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
 
 # 5. Install this config
-git clone <your-repo-url> ~/.config/nvim
+git clone git@github.com:23dal3/neovim_configuration.git ~/.config/nvim
 
 # 6. Launch Neovim
 nvim
